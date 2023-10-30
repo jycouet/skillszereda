@@ -1,11 +1,15 @@
 import { remultSveltekit } from 'remult/remult-sveltekit';
 
 // import { TasksController } from '../shared/tasksController';
-import type { UserInfo } from 'remult';
+import { remult, type UserInfo } from 'remult';
 import { Question } from '../shared/question';
 
 export const handleRemult = remultSveltekit({
 	entities: [Question],
 	// controllers: [TasksController],
-	getUser: async (event) => (await event?.locals?.getSession())?.user as UserInfo
+	getUser: async (event) => (await event?.locals?.getSession())?.user as UserInfo,
+	initApi: async () => {
+		const repo = remult.repo(Question);
+		const q = repo.findFirst();
+	}
 });

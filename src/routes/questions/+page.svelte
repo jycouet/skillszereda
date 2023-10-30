@@ -5,6 +5,7 @@
 
 	import { kitStoreList } from '$lib/kitStoreList';
 	import { Question } from '../../shared/question';
+	import { QuestionLevel } from '../../shared/QuestionLevel';
 
 	// export let data: PageData;
 
@@ -13,7 +14,8 @@
 
 	// Start with SSR tasks then subscribe to changes (respecting options!)
 	const store = kitStoreList(repo, { items: [], loading: true, totalCount: 0 });
-	$: browser && store.listen({});
+	// $: browser && store.listen({});
+	$: browser && store.fetch({});
 
 	let newTaskTitle = '';
 
@@ -34,7 +36,7 @@
 	}
 	async function saveQuestion(q: Question) {
 		try {
-			await repo.save(q);
+			const tt = await repo.save(q);
 		} catch (error: any) {
 			alert(error.message);
 		}
@@ -54,7 +56,7 @@
 	// }
 </script>
 
-<h2>List of questions</h2>
+<h2>Questions CRUD</h2>
 <main>
 	<!-- <div>
 		<button on:click={() => updateLimit('LESS')}>Less</button>
@@ -74,6 +76,7 @@
 	<table>
 		<tr>
 			<th>Description</th>
+			<th>Level</th>
 			<th>Actions</th>
 		</tr>
 
@@ -82,6 +85,13 @@
 				<td>
 					<!-- <input type="checkbox" bind:checked={item.completed} on:change={() => saveTask(item)} /> -->
 					<input bind:value={item.description} />
+				</td>
+				<td>
+					<select bind:value={item.level}>
+						{#each repo.fields.level.options?.valueConverter?.values ?? [] as l}
+							<option value={l}>{l.caption}</option>
+						{/each}
+					</select>
 				</td>
 				<td>
 					<button on:click={() => saveQuestion(item)}>Save</button>
