@@ -5,7 +5,6 @@
 
 	import { kitStoreList } from '$lib/kitStoreList';
 	import { Question } from '../../shared/question';
-	import { QuestionLevel } from '../../shared/QuestionLevel';
 
 	// export let data: PageData;
 
@@ -41,30 +40,12 @@
 			alert(error.message);
 		}
 	}
-	// async function setAllCompleted(completed: boolean) {
-	// 	await TasksController.setAllCompleted(completed);
-	// }
-
-	// function updateLimit(direction: 'MORE' | 'LESS') {
-	// 	const limit = parseInt($page.url.searchParams.get('limit') || '3');
-	// 	const newLimit = direction === 'MORE' ? limit + 1 : limit - 1;
-
-	// 	// Let's not go bellow 1!
-	// 	if (newLimit < 1) return;
-
-	// 	goto(`/?limit=${newLimit}`);
-	// }
 </script>
 
 <h2>Questions CRUD</h2>
 <main>
-	<!-- <div>
-		<button on:click={() => updateLimit('LESS')}>Less</button>
-		<i>Show</i>
-		<button on:click={() => updateLimit('MORE')}>More</button>
-	</div> -->
 	{#if repo.metadata.apiInsertAllowed()}
-		<form class="flex" on:submit|preventDefault={addQuestion}>
+		<form class="flex" style="border-bottom: 1px dashed;" on:submit|preventDefault={addQuestion}>
 			<input
 				style="width: 100%;"
 				bind:value={newTaskTitle}
@@ -74,19 +55,19 @@
 		</form>
 	{/if}
 	<table>
-		<tr>
-			<th>Description</th>
+		<!-- <tr>
 			<th>Track</th>
 			<th>Level</th>
-			<th style="width: 10%;">Actions</th>
-		</tr>
+			<th>Actions</th>
+		</tr> -->
 
 		{#each $store.items ?? [] as item}
 			<tr>
-				<td>
-					<!-- <input type="checkbox" bind:checked={item.completed} on:change={() => saveTask(item)} /> -->
-					<input bind:value={item.description} />
+				<td colspan="3">
+					<textarea bind:value={item.description} rows="3" />
 				</td>
+			</tr>
+			<tr style="border-bottom: 1px dashed;">
 				<td>
 					<select bind:value={item.track}>
 						{#each repo.fields.track.options?.valueConverter?.values ?? [] as l}
