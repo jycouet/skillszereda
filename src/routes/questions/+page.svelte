@@ -14,8 +14,8 @@
 
 	// Start with SSR tasks then subscribe to changes (respecting options!)
 	const store = kitStoreList(repo, { items: [], loading: true, totalCount: 0 });
-	// $: browser && store.listen({});
-	$: browser && store.fetch({});
+	$: browser && store.listen({});
+	// $: browser && store.fetch({});
 
 	let newTaskTitle = '';
 
