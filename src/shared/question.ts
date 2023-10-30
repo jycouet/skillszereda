@@ -1,6 +1,7 @@
 import { Allow, Entity, Field, Fields, Validators } from 'remult';
 import { Role } from './Role';
 import { QuestionLevel } from './QuestionLevel';
+import { QuestionTrack } from './QuestionTrack';
 
 @Entity('questions', {
 	allowApiRead: Allow.authenticated,
@@ -19,4 +20,7 @@ export class Question {
 
 	@Field(() => QuestionLevel, { inputType: 'selectEnum' })
 	level = QuestionLevel.JUNIOR;
+
+	@Field(() => QuestionTrack, { inputType: 'selectEnum' })
+	track = QuestionTrack.SOFT;
 }

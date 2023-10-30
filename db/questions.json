@@ -2,11 +2,13 @@
   {
     "id": "dzm8wojdsznlnad1eeh88lef",
     "description": "Second question",
-    "level": "SENIOR_PRINCIPAL"
+    "level": "SENIOR_PRINCIPAL",
+    "track": "SOFT"
   },
   {
     "id": "hdzd26a0qvkn34zgsbb3ntta",
     "description": "Yop",
-    "level": "SENIOR_PRINCIPAL"
+    "level": "SENIOR_PRINCIPAL",
+    "track": "TRACK4"
   }
 ]

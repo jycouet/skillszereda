@@ -76,8 +76,9 @@
 	<table>
 		<tr>
 			<th>Description</th>
+			<th>Track</th>
 			<th>Level</th>
-			<th>Actions</th>
+			<th style="width: 10%;">Actions</th>
 		</tr>
 
 		{#each $store.items ?? [] as item}
@@ -87,6 +88,13 @@
 					<input bind:value={item.description} />
 				</td>
 				<td>
+					<select bind:value={item.track}>
+						{#each repo.fields.track.options?.valueConverter?.values ?? [] as l}
+							<option value={l}>{l.caption}</option>
+						{/each}
+					</select>
+				</td>
+				<td>
 					<select bind:value={item.level}>
 						{#each repo.fields.level.options?.valueConverter?.values ?? [] as l}
 							<option value={l}>{l.caption}</option>
@@ -94,10 +102,18 @@
 					</select>
 				</td>
 				<td>
-					<button on:click={() => saveQuestion(item)}>Save</button>
-					<button on:click={() => deleteQuestion(item)}>Delete</button>
+					<span class="flex">
+						<button on:click={() => saveQuestion(item)}>Save</button>
+						<button on:click={() => deleteQuestion(item)}>Delete</button>
+					</span>
 				</td>
 			</tr>
+		{:else}
+			{#if $store.loading}
+				Loading...
+			{:else}
+				No Data
+			{/if}
 		{/each}
 	</table>
 	<!-- <div>
