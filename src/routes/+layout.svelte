@@ -1,6 +1,9 @@
 <script lang="ts">
-	import { remult } from 'remult';
+	import { Remult, remult } from 'remult';
 	import type { LayoutData } from './$types';
+	import { signOut } from '@auth/sveltekit/client';
+	import { Role } from '../shared/Role';
+	import { Question } from '../shared/question';
 
 	export let data: LayoutData;
 
@@ -14,6 +17,28 @@
 </svelte:head>
 
 <div class="content">
+	<div class="flex">
+		<h1><a href="/" style="color: white;">💯 Skillszereda</a></h1>
+		<span style="margin-bottom: 12px;">
+			👋 {remult.user?.name} <a href="/" on:click={signOut}>Sign Out</a>
+		</span>
+	</div>
+
+	<style>
+		.flex {
+			display: flex;
+			justify-content: space-between;
+			align-items: end;
+		}
+	</style>
+
+	<!-- {#if remult.user?.roles?.includes(Role.ADMIN)} -->
+	{#if remult.repo(Question).metadata.apiInsertAllowed()}
+		<a href="/questions">Questions</a>
+	{/if}
+
+	<hr />
+
 	<slot />
 </div>
 
