@@ -2,6 +2,7 @@ import Credentials from '@auth/core/providers/credentials';
 import { SvelteKitAuth } from '@auth/sveltekit';
 import type { UserInfo } from 'remult';
 import { Role } from '../shared/Role';
+import { skipCSRFCheck } from '@auth/core';
 
 const validUsers: UserInfo[] = [
 	{ id: 'admin', name: 'Admin', roles: [Role.ADMIN] },
@@ -11,9 +12,10 @@ const validUsers: UserInfo[] = [
 
 //Based on article at https://authjs.dev/reference/sveltekit
 export const handleAuth = SvelteKitAuth({
-	trustHost: true,
 	// for codesandbox
+	trustHost: false,
 	useSecureCookies: false,
+	// skipCSRFCheck: skipCSRFCheck,
 	providers: [
 		Credentials({
 			credentials: {
