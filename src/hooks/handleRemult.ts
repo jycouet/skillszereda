@@ -6,14 +6,17 @@ import { createPostgresDataProvider } from 'remult/postgres';
 import { Question } from '../shared/question';
 
 export const handleRemult = remultSveltekit({
+	logApiEndPoints: false,
 	entities: [Question],
-	dataProvider: createPostgresDataProvider({
-		connectionString: DATABASE_URL
-	}),
-	// controllers: [TasksController],
+	dataProvider:
+		DATABASE_URL && DATABASE_URL !== ''
+			? createPostgresDataProvider({
+					connectionString: DATABASE_URL
+			  })
+			: undefined,
 	getUser: async (event) => (await event?.locals?.getSession())?.user as UserInfo,
 	initApi: async () => {
-		const repo = remult.repo(Question);
-		const q = repo.findFirst();
+		// const repo = remult.repo(Question);
+		// const q = repo.findFirst();
 	}
 });

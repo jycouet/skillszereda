@@ -16,7 +16,7 @@ export const handleAuth = SvelteKitAuth({
 		Credentials({
 			credentials: {
 				name: {
-					placeholder: 'Try Me or Manager or Admin'
+					placeholder: 'Log as Admin'
 				}
 			},
 			authorize: (info) => validUsers.find((user) => user.name === info?.name) || null
