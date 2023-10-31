@@ -61,6 +61,8 @@ export const kitStoreList = <T>(
 		},
 		listen: async (options?: FindOptions<T>) => {
 			if (browser) {
+				console.log(`ccc`, unSub);
+
 				await plzUnSub();
 
 				unSub = repo.liveQuery(options).subscribe(async (info) => {

@@ -1,9 +1,11 @@
 <script lang="ts">
+	import '../app.postcss';
 	import { Remult, remult } from 'remult';
 	import type { LayoutData } from './$types';
 	import { signOut } from '@auth/sveltekit/client';
 	import { Role } from '../shared/Role';
 	import { Question } from '../shared/question';
+	import SelectTheme from '$lib/SelectTheme.svelte';
 
 	export let data: LayoutData;
 
@@ -13,46 +15,28 @@
 
 <svelte:head>
 	<title>Skillszereda</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css" />
 </svelte:head>
 
-<div class="content">
-	<div class="flex">
-		<h1><a href="/" style="color: white;">💯 Skillszereda</a></h1>
-		<span style="margin-bottom: 12px;">
-			👋 {remult.user?.name} <a href="/" on:click={signOut}>Sign Out</a>
+<div class="container m-auto px-4 flex flex-col gap-4">
+	<div class="flex justify-between items-center">
+		<h1><a href="/" class="text-4xl text-accent">💯 Skillszereda</a></h1>
+		<span class="flex gap-4 items-center">
+			<span>
+				👋 {remult.user?.name}
+			</span>
+			<SelectTheme />
 		</span>
 	</div>
 
-	<style>
-		.flex {
-			display: flex;
-			justify-content: space-between;
-			align-items: end;
-		}
-	</style>
-
-	<!-- {#if remult.user?.roles?.includes(Role.ADMIN)} -->
-	{#if remult.repo(Question).metadata.apiInsertAllowed()}
-		<a href="/questions">Questions</a>
-	{/if}
-
-	<hr />
+	<div class="flex justify-between">
+		<!-- {#if remult.user?.roles?.includes(Role.ADMIN)} -->
+		{#if remult.repo(Question).metadata.apiInsertAllowed()}
+			<a class="link link-secondary" href="/questions">Questions</a>
+		{/if}
+		<a class="link link-secondary" href="/" on:click={signOut}>Sign Out</a>
+	</div>
 
 	<slot />
-</div>
 
-<div class="footer">
-	<hr />
-	<em>© Dynamic Process {new Date().getFullYear()}</em>
+	<em class="text-xs">© Dynamic Process {new Date().getFullYear()}</em>
 </div>
-
-<style>
-	.content {
-		flex: 1 0 auto;
-	}
-	.footer {
-		margin: 1rem;
-		flex-shrink: 0;
-	}
-</style>
