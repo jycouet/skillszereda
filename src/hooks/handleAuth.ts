@@ -12,10 +12,6 @@ const validUsers: UserInfo[] = [
 
 //Based on article at https://authjs.dev/reference/sveltekit
 export const handleAuth = SvelteKitAuth({
-	// for codesandbox
-	trustHost: false,
-	useSecureCookies: false,
-	// skipCSRFCheck: skipCSRFCheck,
 	providers: [
 		Credentials({
 			credentials: {
