@@ -13,6 +13,7 @@ export class Question {
 	id = '';
 
 	@Fields.string<Question>({
+		caption: "Question's description",
 		validate: (task) => {
 			if (task.description.length < 3) throw Error('Too short');
 		}

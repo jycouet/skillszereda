@@ -54,7 +54,7 @@
 				<input
 					class="input input-bordered w-full max-w-xs"
 					bind:value={newTaskTitle}
-					placeholder="THE description"
+					placeholder={repo.fields.description.caption}
 				/>
 				<button class="btn btn-primary">Add</button>
 			</form>
