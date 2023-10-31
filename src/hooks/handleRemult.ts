@@ -16,7 +16,11 @@ export const handleRemult = remultSveltekit({
 			: undefined,
 	getUser: async (event) => (await event?.locals?.getSession())?.user as UserInfo,
 	initApi: async () => {
+		// reset all questions!
 		// const repo = remult.repo(Question);
-		// const q = repo.findFirst();
+		// const qs = await repo.find();
+		// qs.forEach(async (q) => {
+		// 	await repo.delete(q);
+		// });
 	}
 });

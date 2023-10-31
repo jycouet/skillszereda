@@ -4,8 +4,9 @@ import { QuestionLevel } from './QuestionLevel';
 import { QuestionTrack } from './QuestionTrack';
 
 @Entity('questions', {
-	allowApiRead: Allow.authenticated,
-	allowApiCrud: Role.ADMIN
+	// allowApiRead: Allow.authenticated,
+	// allowApiCrud: Role.ADMIN
+	allowApiCrud: true
 })
 export class Question {
 	@Fields.cuid()
@@ -17,6 +18,9 @@ export class Question {
 		}
 	})
 	description = '';
+
+	@Fields.number({ dbName: '"order"' })
+	order = 0;
 
 	@Field(() => QuestionLevel, { inputType: 'selectEnum' })
 	level = QuestionLevel.JUNIOR;

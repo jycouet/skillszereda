@@ -1,20 +1,23 @@
 [
-  {
-    "id": "dzm8wojdsznlnad1eeh88lef",
-    "description": "Segítséget és magyarázatot kér, ha szükséges",
-    "level": "JUNIOR",
-    "track": "SOFT"
-  },
-  {
-    "id": "hdzd26a0qvkn34zgsbb3ntta",
-    "description": "Nyitottsággal fogad visszajelzéseket, és mindenből tanul",
-    "level": "JUNIOR",
-    "track": "SOFT"
-  },
-  {
-    "id": "u3zq3fdf3sxkkdh4i2arvwlm",
-    "description": "Pozitív módon kezeli a stresszt és a nyomást",
-    "level": "PRO",
-    "track": "SOFT"
-  }
+	{
+		"id": "dzm8wojdsznlnad1eeh88lef",
+		"description": "Segítséget és magyarázatot kér, ha szükséges",
+		"level": "JUNIOR",
+		"track": "SOFT",
+		"\"order\"": 4
+	},
+	{
+		"id": "hdzd26a0qvkn34zgsbb3ntta",
+		"description": "Nyitottsággal fogad visszajelzéseket, és mindenből tanul",
+		"level": "JUNIOR",
+		"track": "SOFT",
+		"\"order\"": 0
+	},
+	{
+		"id": "u3zq3fdf3sxkkdh4i2arvwlm",
+		"description": "Pozitív módon kezeli a stresszt és a nyomást",
+		"level": "PRO",
+		"track": "SOFT",
+		"\"order\"": 0
+	}
 ]

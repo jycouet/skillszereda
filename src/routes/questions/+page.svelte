@@ -14,9 +14,9 @@
 
 	// Start with SSR tasks then subscribe to changes (respecting options!)
 	const store = kitStoreList(repo, { items: [], loading: true, totalCount: 0 });
-	$: browser && store.listen({});
-	// $: browser && !dev && store.listen({});
-	// $: browser && dev && store.fetch({});
+	// $: browser && store.listen({});
+	$: browser && !dev && store.listen({});
+	$: browser && dev && store.fetch({});
 
 	let newTaskTitle = '';
 
@@ -69,6 +69,7 @@
 				<th>Description</th>
 				<th>Track</th>
 				<th>Level</th>
+				<th>Order</th>
 				<th>Actions</th>
 			</tr>
 
@@ -94,6 +95,9 @@
 								<option value={l}>{l.caption}</option>
 							{/each}
 						</select>
+					</td>
+					<td>
+						<input class="input input-bordered w-20" type="number" bind:value={item.order} />
 					</td>
 					<td>
 						<span class="flex gap-2">
