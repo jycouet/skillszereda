@@ -7,6 +7,7 @@ import { dataProvider } from './handleRemult';
 
 //Based on article at https://authjs.dev/reference/sveltekit
 export const handleAuth = SvelteKitAuth({
+	trustHost: true,
 	providers: [
 		Credentials({
 			credentials: {
