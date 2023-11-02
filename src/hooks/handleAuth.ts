@@ -1,14 +1,9 @@
 import Credentials from '@auth/core/providers/credentials';
 import { SvelteKitAuth } from '@auth/sveltekit';
-import type { UserInfo } from 'remult';
+import { Remult, type UserInfo } from 'remult';
 import { Role } from '../shared/Role';
-import { skipCSRFCheck } from '@auth/core';
-
-const validUsers: UserInfo[] = [
-	{ id: 'admin', name: 'Admin', roles: [Role.ADMIN] },
-	{ id: 'manager', name: 'Manager', roles: [Role.MANAGER] },
-	{ id: 'me', name: 'Me' }
-];
+import { User } from '../shared/user';
+import { dataProvider } from './handleRemult';
 
 //Based on article at https://authjs.dev/reference/sveltekit
 export const handleAuth = SvelteKitAuth({
@@ -16,16 +11,39 @@ export const handleAuth = SvelteKitAuth({
 		Credentials({
 			credentials: {
 				name: {
-					placeholder: 'Log as Admin'
+					placeholder: 'Log with your name'
 				}
 			},
-			authorize: (info) => validUsers.find((user) => user.name === info?.name) || null
+			authorize: async (info) => {
+				const remult = new Remult(await dataProvider());
+				let user = await remult.repo(User).findFirst({ name: [String(info.name)] });
+				if (!user) {
+					user = await remult.repo(User).insert({ name: String(info.name) });
+				}
+
+				return taint(user);
+			}
 		})
 	],
 	callbacks: {
-		session: ({ session, token }) => ({
-			...session,
-			user: validUsers.find((user) => user.id === token?.sub)
-		})
+		session: async ({ session, token }) => {
+			const remult = new Remult(await dataProvider());
+			let user = await remult.repo(User).findFirst({ id: [String(token?.sub)] });
+			return {
+				...session,
+				user: taint(user)!
+			};
+		}
 	}
 });
+
+export const taint = (user?: User): UserInfo | null => {
+	if (!user) {
+		return null;
+	}
+	return {
+		id: user.id,
+		name: user.name,
+		roles: user.name === 'Admin' ? [Role.ADMIN] : user.name === 'Manager' ? [Role.MANAGER] : []
+	};
+};

@@ -34,8 +34,15 @@ export const kitStoreList = <T>(
 	// if we already have a subscription, unsubscribe (on option update for example)
 	const plzUnSub = async () => {
 		if (unSub) {
-			await unSub();
-			unSub = null;
+			// 		let source: EventSource;
+			// onMount(() => {
+			// 	source = new EventSource('api/stream');
+			// });
+			// onDestroy(() => source?.close());
+			unSub();
+			// const un = unSub
+			// unSub = null;
+			// await un();
 		}
 	};
 
@@ -61,8 +68,6 @@ export const kitStoreList = <T>(
 		},
 		listen: async (options?: FindOptions<T>) => {
 			if (browser) {
-				console.log(`ccc`, unSub);
-
 				await plzUnSub();
 
 				unSub = repo.liveQuery(options).subscribe(async (info) => {

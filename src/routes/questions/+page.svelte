@@ -6,6 +6,7 @@
 	import { kitStoreList } from '$lib/kitStoreList';
 	import { Question } from '../../shared/question';
 	import Card from '$lib/Card.svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	// export let data: PageData;
 
@@ -14,7 +15,7 @@
 
 	// Start with SSR tasks then subscribe to changes (respecting options!)
 	const store = kitStoreList(repo, { items: [], loading: true, totalCount: 0 });
-	// $: browser && store.listen({});
+	// TODO fix Svelte issue in dev mode!
 	$: browser && !dev && store.listen({});
 	$: browser && dev && store.fetch({});
 

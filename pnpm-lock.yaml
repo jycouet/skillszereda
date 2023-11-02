@@ -62,8 +62,8 @@ devDependencies:
     specifier: ^2.10.1
     version: 2.10.1(prettier@2.8.0)(svelte@4.0.5)
   remult:
-    specifier: 0.23.0-exp.21
-    version: 0.23.0-exp.21
+    specifier: 0.23.0-exp.23
+    version: 0.23.0-exp.23
   svelte:
     specifier: ^4.0.5
     version: 4.0.5
@@ -2317,8 +2317,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /remult@0.23.0-exp.21:
-    resolution: {integrity: sha512-2sTmSihkoXfhoRKADIRa/PLELwgtOj7ZCaU9MFLhitvBf8R5vRydTTgY/emkrOrVs7dprqHgb/DINfNOCJe9IQ==}
+  /remult@0.23.0-exp.23:
+    resolution: {integrity: sha512-0EnhLak4IUAmXtIdyA3hAbGB6R06BGgDJhE4FcPPl/7oBv8NopQ3Zy9XKyLLgulRjsRme2/QyKT4XkR9Knhn7w==}
     dependencies:
       '@paralleldrive/cuid2': 2.2.2
       reflect-metadata: 0.1.13

@@ -1,12 +1,20 @@
-import { Allow, Entity, Field, Fields, Validators } from 'remult';
+import { Allow, Entity, Field, Fields, Validators, remult } from 'remult';
 import { Role } from './Role';
 import { QuestionLevel } from './QuestionLevel';
 import { QuestionTrack } from './QuestionTrack';
+import { QuestionInAssessement } from './questionsInAssessement';
 
-@Entity('questions', {
+@Entity<Question>('questions', {
 	// allowApiRead: Allow.authenticated,
 	// allowApiCrud: Role.ADMIN
-	allowApiCrud: true
+	allowApiCrud: true,
+	deleting: async (entity, e) => {
+		const found = await remult.repo(QuestionInAssessement).findFirst({ questionId: entity.id });
+		if (found) {
+			throw new Error('Cannot delete a question that is already used!');
+			// TODO Implement hide? :)
+		}
+	}
 })
 export class Question {
 	@Fields.cuid()
