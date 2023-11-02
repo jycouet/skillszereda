@@ -1,17 +1,18 @@
 import { remultSveltekit } from 'remult/remult-sveltekit';
 
 import { DATABASE_URL } from '$env/static/private';
-import { remult, SqlDatabase, type UserInfo } from 'remult';
+import { remult, SqlDatabase } from 'remult';
 import { createPostgresDataProvider } from 'remult/postgres';
-import { Question } from '../shared/question';
-import { User } from '../shared/user';
-import { QuestionInAssessement } from '../shared/questionsInAssessement';
+import { JsonFileDataProvider } from 'remult/server';
 import { Assessment } from '../shared/assessment';
 import { AssessmentController } from '../shared/assessmentController';
-import { JsonFileDataProvider } from 'remult/server';
+import { Question } from '../shared/question';
+import { QuestionInAssessement } from '../shared/questionsInAssessement';
+import { User } from '../shared/user';
 import { taint } from './handleAuth';
 
 SqlDatabase.LogToConsole = 'oneLiner';
+
 export const dataProvider = async () =>
 	DATABASE_URL && DATABASE_URL !== ''
 		? createPostgresDataProvider({
