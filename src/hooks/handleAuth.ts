@@ -1,12 +1,13 @@
 import Credentials from '@auth/core/providers/credentials';
 import { SvelteKitAuth } from '@auth/sveltekit';
-import { Remult, type UserInfo } from 'remult';
+import { Remult, remult, type UserInfo } from 'remult';
 import { Role } from '../shared/Role';
 import { User } from '../shared/user';
-import { dataProvider } from './handleRemult';
+import { dataProvider, handleRemult } from './handleRemult';
+import type { Handle } from '@sveltejs/kit';
 
 //Based on article at https://authjs.dev/reference/sveltekit
-export const handleAuth = SvelteKitAuth({
+export const handleAuth: Handle = SvelteKitAuth({
 	trustHost: true,
 	providers: [
 		Credentials({
@@ -15,14 +16,18 @@ export const handleAuth = SvelteKitAuth({
 					placeholder: 'Log with your name'
 				}
 			},
-			authorize: async (info) => {
-				const remult = new Remult(await dataProvider());
-				let user = await remult.repo(User).findFirst({ name: [String(info.name)] });
-				if (!user) {
-					user = await remult.repo(User).insert({ name: String(info.name) });
-				}
+			authorize: async (info, request) => {
+				const res = await handleRemult.withRemult({ request } as any, async () => {
+					let user = await remult.repo(User).findFirst({ name: [String(info.name)] });
 
-				return taint(user);
+					if (!user) {
+						user = await remult.repo(User).insert({ name: String(info.name) });
+					}
+
+					return taint(user);
+				});
+
+				return res;
 			}
 		})
 	],
@@ -37,7 +42,6 @@ export const handleAuth = SvelteKitAuth({
 		}
 	}
 });
-
 export const taint = (user?: User): UserInfo | null => {
 	if (!user) {
 		return null;
